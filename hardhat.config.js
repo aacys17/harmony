@@ -22,9 +22,9 @@ module.exports = {
     artifacts: './src/artifacts',
   },
   networks: {
-    matic: {
-      url: "https://polygon-mumbai.g.alchemy.com/v2/YOUR_APP",
-      accounts: ["MATIC_PRIVATE_KEY"]
+    testnet: {
+      url: "https://api.s0.ps.hmny.io",
+      accounts: ["7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6"],
     }
   },
 };
