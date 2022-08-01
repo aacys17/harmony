@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import FiredGuys from '../artifacts/contracts/MyNFT.sol/FiredGuys.json';
 
-const contractAddress = '0x010A4bf4F26306815AF3d47b2D4741bE0F2bD03B';
+const contractAddress = '0xA2a189268b919e9a62AcfF0FDF77aEDF03CDA862';
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -61,7 +61,7 @@ function NFTImage({ tokenId, getCount }) {
 
   const getMintedStatus = async () => {
     const result = await contract.isContentOwned(metadataURI);
-    console.log(result)
+    console.log(result, metadataURI)
     setIsMinted(result);
   };
 

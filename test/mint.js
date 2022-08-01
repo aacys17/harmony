@@ -10,7 +10,7 @@ const wallet = new Wallet(new Messenger(
     31337,
 ));
 
-wallet.addByPrivateKey('0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e');
+wallet.addByPrivateKey('df57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e');
 
 const contractJson = require("../src/artifacts/contracts/MyNFT.sol/FiredGuys.json");
 const contractAddr = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
