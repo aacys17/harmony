@@ -1,10 +1,12 @@
 import Install from './components/Install';
 import Home from './components/Home';
+import Client from './components/client';
 
 function App() {
 
   if (window.ethereum) {
-    return <Home />;
+    // return <Client />;
+    return <Client />;
   } else {
     return <Install />
   }

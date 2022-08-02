@@ -1,12 +1,14 @@
 import WalletBalance from './WalletBalance';
 import { useEffect, useState } from 'react';
+import axios from "axios";
 
 import { ethers } from 'ethers';
 import FiredGuys from '../artifacts/contracts/MyNFT.sol/FiredGuys.json';
 
-const contractAddress = '0xA2a189268b919e9a62AcfF0FDF77aEDF03CDA862';
+const contractAddress = '0x26F29de8Fb172451961CcA79a79c6C94cD0e19bd';
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
+// const provider = new ethers.providers.JsonRpcProvider('https://api.s0.ps.hmny.io');
 
 // get the end user
 const signer = provider.getSigner();
@@ -76,6 +78,17 @@ function NFTImage({ tokenId, getCount }) {
     getMintedStatus();
     getCount();
   };
+
+  //  const mintToken = async () => {
+  //   axios.get('http://localhost:3000/mint-nft').then(response => {
+  //     console.log(response);
+  //   }).catch(err => {
+  //     console.log(err)
+  //   });
+
+  //   getMintedStatus();
+  //   getCount();
+  // };
 
   async function getURI() {
     const uri = await contract.tokenURI(tokenId);

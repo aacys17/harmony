@@ -9,10 +9,10 @@ const Web3 = require('web3');
 const web3 = new Web3('https://api.s0.ps.hmny.io');
 
 const contract = require("../src/artifacts/contracts/MyNFT.sol/FiredGuys.json");
-const contractAddress = "0xA2a189268b919e9a62AcfF0FDF77aEDF03CDA862";
+const contractAddress = "0x26F29de8Fb172451961CcA79a79c6C94cD0e19bd";
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress);
 
-async function payToMint(tokenURI) {
+async function transferOwnership(address) {
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest'); //get latest nonce
 
 //the transaction
@@ -21,7 +21,7 @@ async function payToMint(tokenURI) {
     'to': contractAddress,
     'nonce': nonce,
     'gas': 5000000,
-    'data': nftContract.methods.transferOwnership('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266').encodeABI()
+    'data': nftContract.methods.transferOwnership(address).encodeABI()
   }
 
   web3.eth.getBalance(PUBLIC_KEY).then(response => {
@@ -53,9 +53,11 @@ signPromise
   })
 }
 
-const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
-const tokenId = 1
-const metadataURI = `${contentId}/${tokenId}.json`;
-const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
-payToMint(metadataURI)
-console.log(metadataURI)
+// const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
+// const tokenId = 1
+// const metadataURI = `${contentId}/${tokenId}.json`;
+// const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+// transferOwnership('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+// console.log(metadataURI)
+
+module.exports = transferOwnership;

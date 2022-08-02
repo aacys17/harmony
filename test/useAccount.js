@@ -9,7 +9,7 @@ const keystore = fs.readFileSync(accountFileName).toString();
 const account = new Account();
 account.fromFile(keystore, passphrase).then(account => {
     // account loaded
-    console.log(account.address);
+    console.log(account);
     //
 
 });
