@@ -7,14 +7,14 @@ import FiredGuys from '../artifacts/contracts/MyNFT.sol/FiredGuys.json';
 
 const contractAddress = '0x26F29de8Fb172451961CcA79a79c6C94cD0e19bd';
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-// const provider = new ethers.providers.JsonRpcProvider('https://api.s0.ps.hmny.io');
+// const provider = new ethers.providers.Web3Provider(window.ethereum);
+const provider = new ethers.providers.JsonRpcProvider('https://api.s0.ps.hmny.io');
 
 // get the end user
-const signer = provider.getSigner();
+// const signer = provider.getSigner();
 
 // get the smart contract
-const contract = new ethers.Contract(contractAddress, FiredGuys.abi, signer);
+const contract = new ethers.Contract(contractAddress, FiredGuys.abi, provider);
 
 
 function Home() {
@@ -51,9 +51,10 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
-  const metadataURI = `${contentId}/${tokenId}.json`;
-  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+  // const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
+  const contentId = 'QmWkhm3PYPMRaUPgxLTjgzLKAErATVFmi7nnSWCoWBdsch';
+  const metadataURI = `${contentId}/pet${tokenId}.json`;
+  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/pet${tokenId}.jpeg`;
 //   const imageURI = `img/${tokenId}.png`;
 
   const [isMinted, setIsMinted] = useState(false);
@@ -67,28 +68,28 @@ function NFTImage({ tokenId, getCount }) {
     setIsMinted(result);
   };
 
-  const mintToken = async () => {
-    const connection = contract.connect(signer);
-    const addr = connection.address;
-    const result = await contract.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05'),
-    });
-
-    await result.wait();
-    getMintedStatus();
-    getCount();
-  };
-
-  //  const mintToken = async () => {
-  //   axios.get('http://localhost:3000/mint-nft').then(response => {
-  //     console.log(response);
-  //   }).catch(err => {
-  //     console.log(err)
+  // const mintToken = async () => {
+  //   const connection = contract.connect(signer);
+  //   const addr = connection.address;
+  //   const result = await contract.payToMint(addr, metadataURI, {
+  //     value: ethers.utils.parseEther('0.05'),
   //   });
 
+  //   await result.wait();
   //   getMintedStatus();
   //   getCount();
   // };
+
+   const mintToken = async (tokenId) => {
+    axios.get('http://localhost:3000/mint-nft/?tokenId='+ tokenId).then(response => {
+      console.log(response);
+    }).catch(err => {
+      console.log(err)
+    }).finally(() => {
+      getMintedStatus();
+      getCount();
+    });
+  };
 
   async function getURI() {
     const uri = await contract.tokenURI(tokenId);
@@ -100,7 +101,7 @@ function NFTImage({ tokenId, getCount }) {
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
         {!isMinted ? (
-          <button className="btn btn-primary" onClick={mintToken}>
+          <button className="btn btn-primary" onClick={() => mintToken(tokenId)}>
             Mint
           </button>
         ) : (

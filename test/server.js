@@ -31,10 +31,11 @@ app.get('/newaccount', (req, res) => {
 // })
 
 app.get('/mint-nft', (req, res) => {
-    const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
-    const tokenId = 9
-    const metadataURI = `${contentId}/${tokenId}.json`;
-    const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+    const tokenId = req.query.tokenId;
+    const contentId = 'QmWkhm3PYPMRaUPgxLTjgzLKAErATVFmi7nnSWCoWBdsch';
+    // const tokenId = 1
+    const metadataURI = `${contentId}/pet${tokenId}.json`;
+    const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/pet${tokenId}.jpeg`;
     payToMint(metadataURI)
     console.log(metadataURI)
     res.json({ message: 'New NFT minted.' });
